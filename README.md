@@ -43,14 +43,14 @@ STEP 4: Take a backup of the drive objects that needs to be created.
 STEP 5: Generate deletion manifests for the drives that has to be cleared
 
 ```
-➜ ./directcsi-drive-recovery-v1.4.5 delete /tmp/terminating.yaml 2021-11-19T08:29:00Z                                  
+➜ ./directcsi-drive-recovery-v1.4.5 delete terminating-drives.yaml 2021-11-19T08:29:00Z                                  
 
  DRIVE         CAPACITY  ALLOCATED  FILESYSTEM  VOLUMES  NODE                 CREATION_TS                    DELETETION_TS                   
  /dev/nvme2n1  8.0 GiB   842 MiB    xfs         8        directcsi-centos7-2  2021-11-19 18:43:07 +0530 IST  2021-11-19 18:58:32 +0530 IST   
  /dev/nvme2n1  8.0 GiB   442 MiB    xfs         4        directcsi-centos7-3  2021-11-19 18:43:08 +0530 IST  2021-11-19 18:58:33 +0530 IST   
  /dev/nvme2n1  8.0 GiB   442 MiB    xfs         4        directcsi-centos7-4  2021-11-19 18:43:08 +0530 IST  2021-11-19 18:58:33 +0530 IST
  
- ➜ ./directcsi-drive-recovery-v1.4.5 delete /tmp/terminating.yaml 2021-11-19T08:29:00Z --yaml > drives-to-delete.yaml
+ ➜ ./directcsi-drive-recovery-v1.4.5 delete terminating-drives.yaml 2021-11-19T08:29:00Z --yaml > drives-to-delete.yaml
 ```
 
 STEP 6: Apply the deletion manifests
@@ -62,13 +62,13 @@ kubectl apply -f drives-to-delete.yaml
 STEP 7: Apply the drives that has to be created
 
 ```
-kubectl create -f /tmp/drivestocreate.yaml
+kubectl create -f drives-to-create.yaml
 ```
 
 STEP 7: Install `direct-csi:v1.4.5-rhel7-patch` 
 
 ```
-kubectl direct-csi install --image direct-csi:v1.4.5-patch
+kubectl direct-csi install --image direct-csi:v1.4.5-rhel7-patch
 ```
 
 STEP 8: Verify the drive states
